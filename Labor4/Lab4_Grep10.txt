@@ -1,0 +1,17 @@
+/*In einer “stoc.csv” Datei sind die Informationen über die Prozessoren aus dem Stock eines
+Ladens vorhanden. Auf jeder Linie sind die folgenden Informationen über je ein Prozessor in
+dieser Reihenfolge zu finden: Hersteller des Prozessors, Modell des Prozessors, die Quantität
+auf Stock. Schreiben Sie ein Skript, das den Verkäufer zur Überprüfung des Stocks helfen soll,
+wenn ein Kunde für ein oder mehrere Prozessoren verlangt. Das Skript erhaltet durch
+Parametern: der Hersteller oder das nachgesuchte Modell und wird in der Standardausgabe
+die Linien aus der “stoc.asv” Datei, die zu der Suchergebnisse und zu der Stockquantiät
+entsprechen, vorstellen.*/
+
+
+#!/bin/sh
+param=$1
+echo $(grep -i $param stoc.csv | grep -v " 0$")
+if ! grep -q $param stoc.csv
+then 
+	echo $"Item not found"
+fi

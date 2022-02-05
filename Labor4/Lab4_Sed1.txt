@@ -1,0 +1,11 @@
+/*Löschen Sie alle Vorkommen von Wörtern in einer Datei. Die Datei und die Wörter werden
+als Parameter in der Befehlszeile angegeben. Der erste Parameter ist der Dateiname. Die
+Datei wird geändert und bei der Standardausgabe wird nichts angezeigt.*/
+
+datei=$1
+wort=$2
+(sed -i "s/$wort//gi" $datei)
+if ! grep -q $wort $datei
+then
+	echo "Wort nicht gefunden"
+fi 

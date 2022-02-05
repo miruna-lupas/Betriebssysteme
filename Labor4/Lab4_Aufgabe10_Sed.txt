@@ -1,0 +1,10 @@
+/*Wechseln Sie die Wörtern aus den Stellen 1 und 3 aus der Datei, der als Parameter in der
+Befehlszeile ausgegeben ist. Die Wörter enthalten nur Buchstaben und sind von jedem
+anderen Zeichen getrennt. Das Ergebnis wird in der Standardausgabe angezeigt*/
+
+#!/bin/sh
+sed -e "s/\([^0-9 ]*\) \([^0-9 ]*\) \([^0-9 ]*\)/\3 \2 \1/" $1
+#mit sed wird das 1. und 3. Wort gebildet aus grosse und kleine buchstaben
+#deswegen haben wir im regex ^0-9 ,damit die worter aus allen zeichen ausser Ziffer und Space gebildet sind
+#dire Reihenfolge von den ersten 3 Worter wird im Output 3-2-1 statt von 1-2-3 sein
+

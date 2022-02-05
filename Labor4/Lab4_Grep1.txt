@@ -1,0 +1,13 @@
+#!/bin/sh
+
+/*Zeigen Sie den Inhalt aller Dateien mit der Erweiterung .txt aus einem Verzeichnis und aus
+allen seinen Unterverzeichnissen an. Das Verzeichnis wird als Parameter in der Befehlszeile
+angegeben. Der Inhalt der Dateien wird nacheinander in der Standardausgabe angezeigt,
+ohne etwas anderes angezeigt zu werden*/
+
+cd "$1"
+grep '^' *.txt
+
+#$1 steht fur das Verzeichnis, das als Parameter gegeben wird
+#man braucht cd Verzeichnis damit die Textdateien in der richtigen ort gesucht werden, andernfalls wird der Inhalt aller Dateien von User ausgezeichnet
+#mit grep wird durch das Verzeichnis den Anfang jeder Zeile (also ^) gesucht und zuruckgegeben 
