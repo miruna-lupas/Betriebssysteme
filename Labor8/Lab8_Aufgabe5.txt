@@ -1,0 +1,63 @@
+/*Schreiben Sie ein Programm, das zwei Wörter und einen Dateinamen in der Befehlszeile als
+Parameter empfängt. Das Programm zeigt den Inhalt der Datei in der Standardausgabe an
+und ersetzt das Vorkommen des ersten Wortes durch das zweite. Die Wörter werden durch
+die ersten beiden Parameter und die Datei durch den dritten Parameter gegeben.*/
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+//argc-argument count 
+//argv[]-parameter aus der befehlszeile
+int main(int argc, char *argv[]) 
+{
+FILE *input_file, *output_file;
+char *word, ch, read[100], *replace; 
+//wir offnen 2 Dateien, eine fur Lesen, eine andere fur schreiben
+input_file = fopen(argv[3],"r"); 
+output_file = fopen("output_file.txt","w+"); 
+if(input_file == NULL || output_file ==NULL)
+//prufen ob unsere Dateien richtig geoffnet wurden
+{
+	printf("Can't open file.");
+	exit(0);
+	}
+//Wir zeigen den Inhalt der angegebenen datei
+puts("Dateiinhalt: "); 
+while(1)
+{
+   ch=fgetc(input_file);
+   if(ch ==EOF){
+   break;
+}
+   printf("%c", ch);
+}
+printf("\n"); 
+word=argv[1]; 
+replace=argv[2]; 
+//wir brauchen rewind damit wir wieder am anfang der Datei gehen  
+rewind(input_file); 
+//wir vergleichen das Erste wort mit dem Dateiinhalt
+while (!feof(input_file))
+{	fscanf(input_file, "%s", read);
+	if (strcmp(read, word) == 0)
+       {
+            strcpy(read, replace);
+        }
+// um doppelte ausfuhrung in der letzten zu vermeiden:
+	if(feof(input_file))
+	break;
+fprintf(output_file, "%s ", read);
+}  
+//Inhalt von output zeigen: 
+rewind(output_file); 
+while (1) {
+     ch = fgetc(output_file);
+     if (ch == EOF) {
+          break;
+        }
+     printf("%c", ch);
+}
+printf("\n");
+fclose(input_file);
+fclose(output_file);
+}
