@@ -1,0 +1,11 @@
+/*Zeigen Sie den Inhalt für jede in der Befehlszeile eingegebene Datei an. Jede Datei wird in
+umgekehrter Reihenfolge der Zeilen angezeigt (zuerst wird die letzte Zeile angezeigt, dann
+die vorletzte usw.). Das Ergebnis wird in der Standardausgabe ohne weitere Zeichen
+zwischen den Inhalten der Dateien angezeigt*/
+
+
+awk '{a[i++]=$0}END{for(j=i-1;j>=0;j--)print a[j];}' $@
+#a[i++]=$0 bedeutet dass die erste Zeile die letzte sein wird
+#danach geht man mit for ab der letzten Zeile bis der ersten
+#print a[j] gibt die Zeilen der Dateien in der inversen Reihenfolge zuruck
+#$@ ist eine Notation fur alle von der Tastatur gegebene Parametern(hier Dateien) 
