@@ -1,0 +1,36 @@
+//Die Hauptidee ist, ein drittes Vektor set_destination zu bauen, der Kapazität als Summe der anderen 2 Kapazitäten hat.
+//Die Reprasentierung von diesen 3. Vektor ist gleich mit der Repräsentierung von Set.h
+Repräsentierung:
+TElem * set.dest
+int* next
+int length
+int firstFree
+
+Konstruktor:
+  ht.length = ht.set.first.length + ht.set.second.length
+  ht.set.dest = new TElem[ht.length]
+  ht.next = new int [ht.length]
+  for k=0, set.dest.length-1 //am Ersten werden die beiden dynamische Arrays -1 eingestellt
+    ht.set.dest[k] <- -1
+    ht.next[k] <- -1
+  end-for
+  ht.firstFree <- 0
+
+//Komplexität: Theta(ht.length)-worst ; T(1) best ; T(1) avg
+subalgorithm merge(ht.set.first,ht.set.second)
+  i <- hashfunc(ht.set.first[i])
+  j <-hashfunc(ht.set.second[j])
+  while(i < ht.set.first.length) //in set_destination setzen wir die Elemente vom 1. Vektor
+              ht.set.dest[k] = ht.set.first[i]
+              i++
+              k++
+   end while
+   while(j< ht.set.second.length)  //dann setzen wir auch die Elemente von dem 2. Vektor
+             ht.set.dest[k] = ht.set.second[j]
+             j++
+             k++
+   end while
+end-subalgorithm
+   
+Destruktor
+delete set, delete next
