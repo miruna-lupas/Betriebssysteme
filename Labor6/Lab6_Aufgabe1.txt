@@ -1,0 +1,21 @@
+#!/bin/sh
+/*Der Name einer Datei mit der Erweiterung “.c” wird als Parameter in der Befehlszeile
+angegeben. Bestimmen Sie für jede im Programm definierte "int" -Funktion, die Anzahl der
+Aufrufe (wie viele Male ist die “int” -Funktion im Programm ausgeführt). Das Ergebnis wird
+in der Standardausgabe wie folgt angezeigt: “Name_der_Funktion Anzahl_der_Aufrufe”
+Beispiel für die Standardausgabe:
+summe 3
+differenz 2
+*/
+
+first=`awk '{if($1=="int"){print substr($2,1,length($2)-5)}}' $1` #bei int Funktionen ist $1 immer int
+echo "int functions:" $first
+echo
+awk '/[0-9]/{print $1}' $1 > output.txt #das Template fur Funktionanruf: name_funktion + "(" + PARAM1 + PARAM2 + ")" -nur die FunktionAnrufe enthalten Ziffer
+#in output.txt sind alle Funktionenanrufe/function calls
+
+awk -F"(" '{count[$1]++} END{for(word in count) print word, count[word]}' output.txt #fur jede Funktion wird die Anzahl der Anrufen berechnet, der erste Felder ist name_funktion, weil "(" field separator ist
+
+
+ 
+
