@@ -1,0 +1,113 @@
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+//Expresia aritmetica:
+//(A+B*C)/(A-B+D-C)+A*B*C*D
+int main (int argc, char *argv[])
+{
+    int i, pid,pid1,pid2,pid3,pid4,pid5,count;
+    int status;
+    if(argc!=5) {
+        printf("incorrect number of arguments \n");
+        exit(EXIT_FAILURE);
+    }
+ 
+    int A,B,C,D,sum,prod,diff,div,resultat;
+    count=0;
+    sum=0;
+    diff=0;
+    A=atoi(argv[1]);
+    B=atoi(argv[2]);
+    C=atoi(argv[3]);
+    D=atoi(argv[4]);
+    printf("%d, %d, %d, %d\n", A, B, C, D);
+    //////////////////
+ 
+    pid1 = fork();
+    if (pid1 == 0)
+    {
+        pid=getpid();
+        printf("Forked child %d \n", pid);
+        sum=A+B*C;
+        printf("I am child number %d with pid %d, the sum is %d \n", count+1, pid, sum);
+        exit(EXIT_SUCCESS);
+    }
+
+ else if (pid1 < 0)
+    {
+        printf("Fork error %d.\n", errno);
+        exit(EXIT_FAILURE);
+    }
+ 
+    pid2 = fork();
+    if (pid2 == 0)
+    {
+        pid=getpid();
+        printf("Forked child %d \n", pid);
+        diff=A-B+D-C;
+        printf("I am child number %d with pid %d, the difference is %d \n", count+2, pid, diff);
+        exit(EXIT_SUCCESS);
+    }
+    else if (pid2 < 0)
+    {
+        printf("Fork error %d.\n", errno);
+        exit(EXIT_FAILURE);
+    }
+ 
+    pid3 = fork();
+    if (pid3 == 0)
+    {
+        pid=getpid();
+        printf("Forked child %d \n", pid);
+        prod=A*B*C*D;
+        printf("I am child number %d with pid %d, the product is %d \n", count+3, pid, prod);
+        exit(EXIT_SUCCESS);
+    }
+    else if (pid3 < 0)
+    {
+        printf("Fork error %d.\n", errno);
+        exit(EXIT_FAILURE);
+    }
+ 
+    pid4 = fork();
+
+ if (pid4 == 0)
+    {
+        pid=getpid();
+        printf("Forked child %d \n", pid);
+        div=sum/diff;
+        printf("I am child number %d with pid %d, the quotient is %d \n", count+4, pid, div);
+        exit(EXIT_SUCCESS);
+    }
+    else if (pid4 < 0)
+    {
+        printf("Fork error %d.\n", errno);
+        exit(EXIT_FAILURE);
+    }
+    pid5 = fork();
+    if (pid5 == 0)
+    {
+        pid=getpid();
+        printf("Forked child %d \n", pid);
+        resultat=div+prod;
+        printf("I am child number %d with pid %d, the final result is %d \n", count+5, pid, resultat);
+        exit(EXIT_SUCCESS);
+    }
+    else if (pid5 < 0)
+    {
+        printf("Fork error %d.\n", errno);
+        exit(EXIT_FAILURE);
+    }
+ 
+    for (i = 0; i < 5; ++i)
+    {
+        wait(&status);
+    }
+ 
+    printf("i am done waiting \n");
+    exit(EXIT_SUCCESS);
+}
